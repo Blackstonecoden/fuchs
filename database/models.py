@@ -2,9 +2,9 @@ from aiomysql import Pool
 from database import get_pool
 from datetime import datetime, timedelta
 
-level_table     = "z_level_users"
-economy_table   = "z_economy_users"
-voice_settings  = "z_voice_settings"
+level_table     = "level_users"
+economy_table   = "economy_users"
+voice_settings  = "voice_settings"
 
 class LevelUser:
     def __init__(self, client_id: int):
