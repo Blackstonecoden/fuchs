@@ -2,9 +2,12 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from datetime import datetime, timedelta
+from json import load
 
 from database.models import EconomyUser
-from main import config
+
+with open("config.json", 'r', encoding='utf-8') as file:
+    config = load(file)
 
 class daily_command(commands.Cog):
     def __init__(self, client: commands.Bot):

@@ -2,8 +2,9 @@ from aiomysql import Pool
 from database import get_pool
 from datetime import datetime, timedelta
 
-level_table = "level_users"
-economy_table = "economy_users"
+level_table     = "z_level_users"
+economy_table   = "z_economy_users"
+voice_settings  = "z_voice_settings"
 
 class LevelUser:
     def __init__(self, client_id: int):
@@ -147,4 +148,40 @@ class EconomyUser:
         await self.save()
 
         return self
-        
+
+class VoiceSettings:
+    def __init__(self, client_id: int):
+        self.client_id = client_id
+        self.name = None
+        self.limit = 0
+        self.locked = 0
+        self.hidden = 0
+        self.exception = 0
+
+    async def load(self):
+        pool: Pool = await get_pool()
+        async with pool.acquire() as connection:
+            async with connection.cursor() as cursor:
+                await cursor.execute(f"SELECT * FROM `{voice_settings}` WHERE `client_id`= %s", self.client_id)
+                result = await cursor.fetchone()
+                if result is None:
+                    await cursor.execute(f"INSERT INTO `{voice_settings}` (`client_id`) VALUES (%s)", self.client_id)
+                else:
+                    self.name = result[1]
+                    self.limit = result[2]
+                    self.locked = result[3]
+                    self.hidden = result[4]
+                    self.exception = result[5]
+
+        pool.close()
+        await pool.wait_closed()
+        return self
+    
+    async def save(self):
+        pool: Pool = await get_pool()
+        async with pool.acquire() as connection:
+            async with connection.cursor() as cursor:
+                await cursor.execute(f"UPDATE `{voice_settings}` SET `name` = %s, `limit` = %s, `locked` = %s, `hidden` = %s, `exception` = %s WHERE `client_id` = %s", (self.name, self.limit, self.locked, self.hidden, self.exception, self.client_id))
+        pool.close()
+        await pool.wait_closed()
+        return self

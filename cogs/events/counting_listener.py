@@ -1,15 +1,13 @@
 import discord
 from discord.ext import commands
-from discord import app_commands
-from discord import ui
-import json
+from json import load, dump
 
 with open("config.json", 'r', encoding='utf-8') as file:
-    config = json.load(file)
+    config = load(file)
 
 def save_to_json(location, content):
     with open(location, 'w') as file:
-        json.dump(content, file, indent=4)
+        dump(content, file, indent=4)
 
 class counting_system(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -19,7 +17,7 @@ class counting_system(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
-        if message.channel.id == config["counting_channel"]:
+        if message.channel.id == config["channels"]["counting"]:
             if message.author.id != self.client.storage["counting_last_user"]:
                 if message.content == str(self.client.storage["counting_current_number"]):
                     self.client.storage["counting_current_number"] += 1

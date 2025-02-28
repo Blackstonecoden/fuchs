@@ -15,4 +15,13 @@ CREATE TABLE IF NOT EXISTS `economy_users` (
     `last_daily` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`client_id`)
+);
+CREATE TABLE IF NOT EXISTS `voice_settings` (
+    `client_id` BIGINT NOT NULL,
+    `name` VARCHAR(255) DEFAULT NULL,
+    `limit` BIGINT NOT NULL DEFAULT 0,
+    `locked` BOOLEAN NOT NULL DEFAULT 0,
+    `hidden` BOOLEAN NOT NULL DEFAULT 0,
+    `exception` BIGINT NOT NULL DEFAULT 0,
+    PRIMARY KEY (`client_id`)
 )

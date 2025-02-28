@@ -33,76 +33,90 @@ database_name = discord_app
 ### 1.2.2 Config Datei
 Erstelle nun eine Datei namens `config.json` und fülle sie mit deinen Konfigurationen
 ```json
-{
-    "guild_id": 1234567890123456789,
+{ 
+    "custom_app_status": "🦊 Fuchs",
 
-    "join_role": 1234567890123456789,
+    "guild_id": 1234,
+    "join_role": 1234,
+    "ticket_staff": [1234,1234],
 
-    "welcome_channel": 1234567890123456789,
-
-    "ticket_category": 1234567890123456789,
-    "ticket_staff": [1234567890123456789,1234567890123456789],
-
-    "join_channel": 1234567890123456789,
-    "temp_chanels_category": 1234567890123456789,
-
-    "counting_channel": 1234567890123456789,
-
-    "daily_rewards": {
-    "0": 100,
-    "1": 200,
-    "2": 300,
-    "3": 400,
-    "4": 500,
-    "5": 600,
-    "6": 700,
-    "7": 1000
+    "channels": {
+        "welcome": 1234,
+        "temp_join": 1234,
+        "counting": 1234
     },
 
-    "bot_status": "🦊 Fuchs"
-}
-```
-1.2.3 Json konfigurieren
-Als nächstes startest du die APP, indem du die main.py ausführst und alle Abhängigkeiten aus `requirements.txt` instalierst. Dann sollte ein Ordner namens `json` erscheinen. Öffne die `list_images.json` und fülle sie mit folgendem Inhalt:
+    "categories": {
+        "tickets": 1234,
+        "temp_channels": 1234
+    },    
 
-```json
-{
-    "interface_card": "https://raw.githubusercontent.com/Blackstonecoden/Fuchs/main/images/card.png",
+    "ticket_types": {
+        "general": {
+            "disabled": false,
+            "name": "Allgemeiner Support",
+            "description": "Allgemeiner Support / Fragen",
+            "short_name": "Allgemein",
+            "emoji": "📨",
+            "discord_emoji": "mail"
+        },
+        "application": {
+            "disabled": false,
+            "name": "Team Bewerbung",
+            "description": "Bewirb dich als Teammitglied",
+            "short_name": "Bewerbung",
+            "emoji": "📄",
+            "discord_emoji": "file_text"
+        }
+    },
 
-    "grey_ticket_line": "https://raw.githubusercontent.com/Blackstonecoden/Fuchs/main/line_icons/ticket_grey.png",
-    "red_ticket_line": "https://raw.githubusercontent.com/Blackstonecoden/Fuchs/main/line_icons/ticket_red.png",
-    "green_ticket_line": "https://raw.githubusercontent.com/Blackstonecoden/Fuchs/main/line_icons/ticket_green.png",
+    "daily_rewards": {
+        "0": 100,
+        "1": 200,
+        "2": 300,
+        "3": 400,
+        "4": 500,
+        "5": 600,
+        "6": 700,
+        "7": 1000
+    },
 
-    "user_plus_grey": "https://raw.githubusercontent.com/Blackstonecoden/Fuchs/main/line_icons/user_plus_grey.png",
-    "user_minus_grey": "https://raw.githubusercontent.com/Blackstonecoden/Fuchs/main/line_icons/user_minus_grey.png",
+    "emojis": {
+        "edit":         "<:emoji:1234>",
+        "eye":          "",
+        "eye_off":      "",
+        "lock":         "",
+        "trash":        "",
+        "unlock":       "",
+        "user_minus":   "",
+        "user_plus":    "",
+        "users":        "",
+        "user_check":   "",
+        "file_text":    "",
+        "block":        "",
+        "mail":         "",
+        "repeat":       "",
+        "zap":          "",
+        "refresh":      "",
+        "dollar":       "",
+        "plus":         "",
+        "minus":        "",
+        "rotate":       "",
+        "key":          "",
+    
+        "trash_red":    ""
+    },
 
-    "red_trash_line": "https://raw.githubusercontent.com/Blackstonecoden/Fuchs/main/line_icons/trash_red.png"
-}
-```
-
-Öffne nun die `list_emoji.json` und Füge deine Emojis (erstelle diese auf einem Discord Server oder auf deiner APP und kopiere deren ID und Namenin dem Format `<:name:id>`). Die Icons von der Haupt APP kommen von [feathericons.com](https://feathericons.com/).
-
-```json
-{
-    "edit":"<:edit:12345678901234567890>",
-    "eye":"<:eye:12345678901234567890>",
-    "eye_off":"<:eye_off:12345678901234567890>",
-    "lock":"<:lock:12345678901234567890>",
-    "trash":"<:trash:12345678901234567890>",
-    "unlock":"<:unlock:12345678901234567890>",
-    "user_minus":"<:user_minus:12345678901234567890>",
-    "user_plus": "<:user_plus:12345678901234567890>",
-    "users":"<:users:12345678901234567890>",
-    "user_check": "<:user_check:12345678901234567890",
-    "file_text": "<:file_text:12345678901234567890>",
-    "block": "<:block:12345678901234567890>",
-    "mail":"<:mail:12345678901234567890>",
-    "repeat":"<:repeat:12345678901234567890>",
-    "zap": "<:zap:12345678901234567890>",
-    "refresh": "<:refresh:12345678901234567890>",
-    "dollar": "<:dollar:12345678901234567890>",
-
-    "trash_red": "<:trash_red:12345678901234567890>"
+    "images": {
+        "grey_ticket_line":     "https:/example.com/line_icons/ticket_grey.png",
+        "red_ticket_line":      "https:/example.com/line_icons/ticket_red.png",
+        "green_ticket_line":    "https:/example.com/line_icons/ticket_green.png",
+    
+        "user_plus_grey":       "https:/example.com/line_icons/user_plus_grey.png",
+        "user_minus_grey":      "https:/example.com/line_icons/user_minus_grey.png",
+    
+        "red_trash_line":       "https:/example.com/line_icons/trash_red.png"
+    }
 }
 ```
 

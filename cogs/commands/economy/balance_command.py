@@ -4,10 +4,9 @@ from discord import app_commands
 import json
 
 from database.models import EconomyUser
-from main import config
 
-with open("json/list_images.json", 'r', encoding='utf-8') as file:
-    images = json.load(file)
+with open("config.json", 'r', encoding='utf-8') as file:
+    config = json.load(file)
 
 class balance_command(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -31,7 +30,7 @@ class balance_command(commands.Cog):
         if user.avatar:
             embed.set_author(icon_url=user.avatar.url, name=user.name)
         else:
-            embed.set_author(icon_url=images["standard_profile_picture"], name=user.name)
+            embed.set_author(icon_url=config["images"]["standard_profile_picture"], name=user.name)
         if economy_user.coins < 0:
             embed.add_field(name="Coins", value=f"∞ 🪙", inline=True)
             embed.add_field(name="Bank", value=f"{economy_user.bank} 🪙", inline=True)

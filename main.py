@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import json
 from pathlib import Path
+import warnings
+from logging import WARN
 
 import discord
 from discord.ext import commands
@@ -11,10 +13,11 @@ import time
 from colorama import Fore, Back, Style
 import platform
 
-from cogs import ticket_system
-from cogs import channel_system
+from cogs.buttons.ticket_buttons import TicketMenuView, TicketButtons, DeleteTicketButtons
+from cogs.buttons.voice_buttons import VoiceButtons
 
 from aiomysql import Pool
+from aiomysql import Warning as MySQLWarning 
 from database.models import get_pool
 import aiofiles
 import asyncio
@@ -34,14 +37,9 @@ if not os.path.exists("json/data.json"):
 if not os.path.exists("json/tickets.json"):
     with open("json/tickets.json", 'w', encoding='utf-8') as file:
         json.dump({}, file, ensure_ascii=False, indent=4)
-if not os.path.exists("json/list_emoji.json"):
-    with open("json/list_emoji.json", 'w', encoding='utf-8') as file:
-        json.dump({}, file, ensure_ascii=False, indent=4)
-if not os.path.exists("json/list_images.json"):
-    with open("json/list_images.json", 'w', encoding='utf-8') as file:
-        json.dump({}, file, ensure_ascii=False, indent=4)
 
 async def on_tree_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    print(error)
     if isinstance(error, app_commands.CommandOnCooldown):
         if error.retry_after >= 60:
             if interaction.command.name == "work":
@@ -62,16 +60,18 @@ async def init_db():
         async with connection.cursor() as cursor:
             for statement in sql.split(';'):
                 try:
-                    await cursor.execute(statement)
+                    with warnings.catch_warnings():
+                        warnings.simplefilter("ignore", MySQLWarning) 
+                        await cursor.execute(statement)
                 except Exception as e:
-                    continue
+                    print(e)
     pool.close()
     await pool.wait_closed()
 
 class Client(commands.Bot):
     def __init__(self):
         intents = discord.Intents.all()
-        super().__init__(command_prefix='/syntheria', intents=intents)
+        super().__init__(command_prefix='/disabled', intents=intents)
 
         asyncio.run(init_db())
         self.tree.on_error = on_tree_error
@@ -84,10 +84,10 @@ class Client(commands.Bot):
             await self.load_extension("cogs."+cog)
 
     async def on_ready(self):
-        self.add_view(channel_system.VoiceButtons(client))
-        self.add_view(ticket_system.TicketMenuView(client))
-        self.add_view(ticket_system.TicketButtons(client))
-        self.add_view(ticket_system.DeleteTicketButtons(client))
+        self.add_view(VoiceButtons(client))
+        self.add_view(TicketMenuView(client))
+        self.add_view(TicketButtons(client))
+        self.add_view(DeleteTicketButtons(client))
 
         os.system('cls' if os.name == 'nt' else 'clear')
         prfx = (Back.BLACK + Fore.CYAN + time.strftime("%H:%M:%S", time.gmtime()) + Back.RESET + Fore.WHITE + Style.NORMAL)
@@ -100,9 +100,9 @@ class Client(commands.Bot):
         synced = await self.tree.sync(guild=discord.Object(id=config["guild_id"]))
         print(prfx + " Slash CMDs Synced " + Fore.BLUE + str(len(synced)) + " Commands")
         print("")
-        await client.change_presence(activity = discord.CustomActivity(name=config["bot_status"]))
+        await client.change_presence(activity = discord.CustomActivity(name=config["custom_app_status"]))
 
 if __name__ == "__main__":
     client = Client()
     client.remove_command('help')
-    client.run(os.getenv('TOKEN'))
+    client.run(os.getenv('TOKEN'), log_level=WARN)

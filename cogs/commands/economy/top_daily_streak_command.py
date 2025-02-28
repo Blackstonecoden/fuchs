@@ -1,10 +1,12 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-import asyncio
+from json import load
 
-from main import config
 from database.models import EconomyUser
+
+with open("config.json", 'r', encoding='utf-8') as file:
+    config = load(file)
 
 class top_daily_streak_command(commands.Cog):
     def __init__(self, client: commands.Bot):

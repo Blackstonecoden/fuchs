@@ -1,11 +1,12 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-import asyncio
+from json import load
 import math
-
-from main import config
 from database.models import EconomyUser
+
+with open("config.json", 'r', encoding='utf-8') as file:
+    config = load(file)
 
 def convert(number: int) -> str:
     if number >= 10**9: 

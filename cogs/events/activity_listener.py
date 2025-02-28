@@ -4,7 +4,6 @@ import datetime
 import asyncio
 import random
 
-from main import config
 from database.models import LevelUser
 
 async def send_level_up(member: discord.Member, level_user: LevelUser, channel: discord.abc.Messageable):

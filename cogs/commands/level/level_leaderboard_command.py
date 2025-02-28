@@ -1,15 +1,13 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-import asyncio
 import json
-from easy_pil import Editor, Canvas, Font, load_image
+from easy_pil import Editor, Font, load_image
 
-from main import config
 from database.models import LevelUser
 
-with open("json/list_images.json", 'r', encoding='utf-8') as file:
-    images = json.load(file)
+with open("config.json", 'r', encoding='utf-8') as file:
+    config = json.load(file)
 
 async def generate_card(client: commands.Bot, top_users: list) -> discord.File:
     background = Editor("images/leaderboard_background.png")

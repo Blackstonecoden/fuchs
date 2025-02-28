@@ -1,14 +1,13 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-import json
-from easy_pil import Editor, Canvas, Font, load_image
+from json import load
+from easy_pil import Editor, Font, load_image
 
 from database.models import LevelUser
-from main import config
 
-with open("json/list_images.json", 'r', encoding='utf-8') as file:
-    images = json.load(file)
+with open("config.json", 'r', encoding='utf-8') as file:
+    config = load(file)
 
 async def generate_card(user: discord.User, xp, xp_next, xp_last, level, position):
     if level == 0:

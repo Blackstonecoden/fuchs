@@ -1,12 +1,10 @@
 import discord
 from discord.ext import commands
-import json
-from easy_pil import Editor, Canvas, Font, load_image
+from json import load
+from easy_pil import Editor, Font, load_image
 
-from main import config
-
-with open("json/list_images.json", 'r', encoding='utf-8') as file:
-    images = json.load(file)
+with open("config.json", 'r', encoding='utf-8') as file:
+    config = load(file)
 
 async def generate_welcome_card(user: discord.User, guild: discord.Guild):
     member_count = int(guild.approximate_member_count) or 3
@@ -16,7 +14,7 @@ async def generate_welcome_card(user: discord.User, guild: discord.Guild):
     if user.avatar:
         profile_picture = load_image(str(user.avatar.url))
     else:
-        profile_picture = load_image(images["standard_profile_picture"])
+        profile_picture = load_image(config["images"]["standard_profile_picture"])
     profile = Editor(profile_picture).resize((150, 150)).circle_image()
 
     poppins = Font.poppins(size=40)
