@@ -143,8 +143,7 @@ class VoiceButtons(discord.ui.View):
 
                     role = channel.guild.get_role(settings.exception)
                     overwrites = channel.overwrites
-                    role_overwrites = discord.PermissionOverwrite()
-                    overwrites[role] = role_overwrites
+                    del overwrites[role]
                     await channel.edit(overwrites=overwrites)
 
                     settings.exception = 0
@@ -284,17 +283,23 @@ class ExceptionMenu(discord.ui.RoleSelect):
     async def callback(self, interaction: discord.Interaction):
         if str(self.channel_id) in self.client.temp_channels:
             if self.client.temp_channels[str(self.channel_id)]["channel_owner"] == interaction.user.id:
+                settings = await VoiceSettings(interaction.user.id).load()
+                if self.values[0].id == settings.exception:
+                    await interaction.response.send_message("❌ Diese Rolle wurde schon als Ausnahme gesetzt.", ephemeral=True)
+                    return
+                    
                 await interaction.response.defer()
 
                 channel = self.client.get_channel(self.channel_id)
                 overwrites = channel.overwrites
+                if settings.exception != 0:
+                    del overwrites[channel.guild.get_role(settings.exception)]
                 role_overwrites = overwrites.get(self.values[0], discord.PermissionOverwrite())
                 role_overwrites.read_messages=True
                 role_overwrites.connect=True
                 overwrites[self.values[0]] = role_overwrites
                 await channel.edit(overwrites=overwrites)
 
-                settings = await VoiceSettings(interaction.user.id).load()
                 settings.exception = self.values[0].id
                 await settings.save()
             else:
