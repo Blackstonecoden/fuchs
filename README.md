@@ -38,6 +38,7 @@ Erstelle nun eine Datei namens `config.json` und fülle sie mit deinen Konfigura
 
     "guild_id": 1234,
     "join_role": 1234,
+    "suggestion_role": 1234,
     "ticket_staff": [1234,1234],
 
     "channels": {
