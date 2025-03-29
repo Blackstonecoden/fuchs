@@ -40,7 +40,7 @@ class join_role(commands.Cog):
         guild = await self.client.fetch_guild(config["guild_id"])
         file = await generate_welcome_card(member, guild)
 
-        channel: discord.TextChannel  = await self.client.fetch_channel(config["welcome_channel"])
+        channel: discord.TextChannel  = await self.client.fetch_channel(config["channels"]["welcome"])
         message = await channel.send(content=f"{member.mention}",file=file)
         await message.add_reaction("🥳")
 
