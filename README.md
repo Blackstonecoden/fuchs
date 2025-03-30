@@ -39,7 +39,6 @@ Erstelle nun eine Datei namens `config.json` und fülle sie mit deinen Konfigura
     "guild_id": 1234,
     "join_role": 1234,
     "suggestion_role": 1234,
-    "ticket_staff": [1234,1234],
 
     "channels": {
         "welcome": 1234,
@@ -55,6 +54,7 @@ Erstelle nun eine Datei namens `config.json` und fülle sie mit deinen Konfigura
     "ticket_types": {
         "general": {
             "disabled": false,
+            "roles": [1234,1234],
             "name": "Allgemeiner Support",
             "description": "Allgemeiner Support / Fragen",
             "short_name": "Allgemein",
@@ -63,6 +63,7 @@ Erstelle nun eine Datei namens `config.json` und fülle sie mit deinen Konfigura
         },
         "application": {
             "disabled": false,
+            "roles": [1234,1234],
             "name": "Team Bewerbung",
             "description": "Bewirb dich als Teammitglied",
             "short_name": "Bewerbung",
