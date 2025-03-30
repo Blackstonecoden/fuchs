@@ -107,7 +107,7 @@ class TicketButtons(discord.ui.View):
 
     @discord.ui.button(emoji=config["emojis"]["user_minus"], custom_id="add_user_ticket", row=0)
     async def remove_user_callback(self, interaction: discord.Interaction, Button: discord.ui.Button):
-        if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]):
+        if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]) or any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_type"]]["roles"] for role in interaction.user.roles) == True:
 
             embed = discord.Embed(description=f"## Nutzer entfernen\n\nWähle unten den Nutzer aus, den du zu diesem Ticket entfernen möchtest, da du ihn z.B. nicht mehr brauchst.", color=color["grey"])
             embed.set_image(url=config["images"]["user_minus_grey"])
