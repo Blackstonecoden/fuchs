@@ -23,6 +23,9 @@ class mention_listener(commands.Cog):
             await message.add_reaction("👍")
             await message.add_reaction("👎")
             await message.add_reaction("❌")
+        elif any(f"<@{mention}>" in message.content for mention in config["ping_reactions"]):
+            id = next((mention for mention in config["ping_reactions"] if f"<@{mention}>" in message.content), None)
+            await message.add_reaction(config["ping_reactions"][id])
 
 async def setup(client:commands.Bot) -> None:
     await client.add_cog(mention_listener(client))

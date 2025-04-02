@@ -51,6 +51,10 @@ Erstelle nun eine Datei namens `config.json` und fülle sie mit deinen Konfigura
         "temp_channels": 1234
     },    
 
+    "ping_reactions": {
+        "1234": "🦊"
+    },
+
     "ticket_types": {
         "general": {
             "disabled": false,
