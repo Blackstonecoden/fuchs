@@ -78,7 +78,7 @@ class TicketMenu(discord.ui.Select):
         embed.set_image(url=config["images"]["grey_ticket_line"])
         await ticket_channel.send(embed=embed, view=TicketButtons(self.client))
 
-        self.client.ticket_list[str(ticket_channel.id)] = {"ticket_owner": str(interaction.user.id),"created_at": int(time.time()), "ticket_types": value}
+        self.client.ticket_list[str(ticket_channel.id)] = {"ticket_owner": str(interaction.user.id),"created_at": int(time.time()), "ticket_type": value}
         save_to_json("json/tickets.json", self.client.ticket_list)
 
 
@@ -96,7 +96,7 @@ class TicketButtons(discord.ui.View):
 
     @discord.ui.button(emoji=config["emojis"]["user_plus"], custom_id="remove_user_ticket", row=0)
     async def add_user_callback(self, interaction: discord.Interaction, Button: discord.ui.Button):
-        if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]) or any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_types"]]["roles"] for role in interaction.user.roles) == True:
+        if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]) or any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_type"]]["roles"] for role in interaction.user.roles) == True:
             embed = discord.Embed(description=f"## Nutzer hinzufügen\n\nWähle unten den Nutzer aus, den du zu diesem Ticket hinzufügen möchtest, damit er dir helfen kann.", color=color["grey"])
             embed.set_image(url=config["images"]["user_plus_grey"])
             view = AddUserView(self.client, interaction.channel.id)
@@ -107,7 +107,7 @@ class TicketButtons(discord.ui.View):
 
     @discord.ui.button(emoji=config["emojis"]["user_minus"], custom_id="add_user_ticket", row=0)
     async def remove_user_callback(self, interaction: discord.Interaction, Button: discord.ui.Button):
-        if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]) or any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_types"]]["roles"] for role in interaction.user.roles) == True:
+        if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]) or any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_type"]]["roles"] for role in interaction.user.roles) == True:
 
             embed = discord.Embed(description=f"## Nutzer entfernen\n\nWähle unten den Nutzer aus, den du zu diesem Ticket entfernen möchtest, da du ihn z.B. nicht mehr brauchst.", color=color["grey"])
             embed.set_image(url=config["images"]["user_minus_grey"])
@@ -119,7 +119,7 @@ class TicketButtons(discord.ui.View):
 
     @discord.ui.button(emoji=config["emojis"]["trash_red"], custom_id="close_ticket", row=0)
     async def close_ticket_callback(self, interaction: discord.Interaction, Button: discord.ui.Button):
-        if  any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_types"]]["roles"] for role in interaction.user.roles) == True:
+        if  any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_type"]]["roles"] for role in interaction.user.roles) == True:
             embed = discord.Embed(description=f"## Ticket schließen\n\nMöchtest du wirklich dieses Ticket schließen? Klicke unten auf den roten Knopf, wenn du das Ticket schließen willst.", color=color["red"])
             embed.set_image(url=config["images"]["red_trash_line"])
             view = CloseConfirmButtons(self.client)
