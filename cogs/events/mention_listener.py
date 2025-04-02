@@ -11,6 +11,9 @@ class mention_listener(commands.Cog):
 
     @commands.Cog.listener("on_message")
     async def on_message(self, message: discord.Message):
+        if message.author.bot:
+            return
+        
         if message.content == f"<@&{config["suggestion_role"]}>" and message.reference:
             await message.delete()
             referenced_message = await message.channel.fetch_message(message.reference.message_id)
