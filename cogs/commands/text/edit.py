@@ -15,6 +15,8 @@ class edit_command(commands.Cog):
     @commands.command(name="edit")
     @commands.has_guild_permissions(administrator=True)
     async def edit(self, ctx: commands.Context, *, text: str):
+        if not ctx.message.reference:
+            return await ctx.reply("❌ Du must einer Nachricht antworten, die du bearbeiten möchtest.", mention_author=False)
         reference = await ctx.fetch_message(ctx.message.reference.message_id)
         if reference.author.id != self.client.user.id:
             return await ctx.reply("❌ Diese Nachricht wurde nicht vom Fuchs-Bot gesendet.", mention_author=False)
