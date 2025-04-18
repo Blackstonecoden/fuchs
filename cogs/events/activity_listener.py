@@ -11,6 +11,8 @@ async def send_level_up(member: discord.Member, level_user: LevelUser, channel: 
     await asyncio.sleep(10)
     await message.delete()
 
+
+
 class activity_listener(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client

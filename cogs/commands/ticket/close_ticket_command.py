@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord import app_commands
 from json import load
 
-from cogs.buttons.ticket_buttons import CloseConfirmButtons, color
+from cogs.buttons.ticket_buttons import CloseConfirmButtons
 
 with open("config.json", 'r', encoding='utf-8') as file:
     config = load(file)
@@ -19,7 +19,7 @@ class close_ticket_command(commands.Cog):
     async def close_ticket(self, interaction: discord.Interaction):
         channel = interaction.channel
         if str(channel.id) in self.client.ticket_list:
-            embed = discord.Embed(description=f"## Ticket schließen\n\nMöchtest du wirklich dieses Ticket schließen? Klicke unten auf den roten Knopf, wenn du das Ticket schließen willst.", color=color["red"])
+            embed = discord.Embed(description=f"## Ticket schließen\n\nMöchtest du wirklich dieses Ticket schließen? Klicke unten auf den roten Knopf, wenn du das Ticket schließen willst.", color=0xda373c)
             embed.set_image(url=config["images"]["red_trash_line"])
             view = CloseConfirmButtons(self.client)
             await interaction.response.send_message(embed=embed, view=view, ephemeral=True)

@@ -25,6 +25,8 @@ async def generate_welcome_card(user: discord.User, guild: discord.Guild):
 
     return discord.File(fp=background.image_bytes, filename="welcomecard.png")
 
+
+
 class join_role(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client

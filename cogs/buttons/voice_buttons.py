@@ -8,6 +8,8 @@ from database.models import VoiceSettings
 with open("config.json", 'r', encoding='utf-8') as file:
     config = json.load(file)
 
+
+
 class VoiceButtons(discord.ui.View):
     def __init__(self, client: commands.Bot):
         super().__init__(timeout=None)
@@ -212,6 +214,7 @@ class VoiceButtons(discord.ui.View):
         await interaction.response.send_message("❌ Du bist nicht in einem Temp-Kanal.", ephemeral=True)
 
 
+
 class NameModal(ui.Modal):
     def __init__(self, client:commands.Bot, channel):
         super().__init__(title="Interface")
@@ -227,6 +230,7 @@ class NameModal(ui.Modal):
         settings = await VoiceSettings(interaction.user.id).load()
         settings.name = self.value.value
         await settings.save()
+
 
 
 class UserLimitModal(ui.Modal):
@@ -248,6 +252,7 @@ class UserLimitModal(ui.Modal):
         settings = await VoiceSettings(interaction.user.id).load()
         settings.limit = self.value.value
         await settings.save()
+
 
 
 class KickMenu(discord.ui.UserSelect):
@@ -272,6 +277,7 @@ class KickMenu(discord.ui.UserSelect):
                     await interaction.response.send_message(f"❌ Der Benutzer {member.mention} ist nicht in diesem Kanal.", ephemeral=True)
             else:
                 await interaction.response.send_message("❌ Du bist nicht der Kanal Owner.", ephemeral=True)
+
 
 
 class ExceptionMenu(discord.ui.RoleSelect):
@@ -306,6 +312,7 @@ class ExceptionMenu(discord.ui.RoleSelect):
                 await interaction.response.send_message("❌ Du bist nicht der Kanal Owner.", ephemeral=True)
 
 
+
 class ExceptionMenuView(discord.ui.View):
     def __init__(self, client:commands.Bot, channel):
         super().__init__(timeout=15)
@@ -319,6 +326,7 @@ class ExceptionMenuView(discord.ui.View):
             await self.message.edit(view=self)
 
 
+
 class KickMenuView(discord.ui.View):
     def __init__(self, client:commands.Bot, channel):
         super().__init__(timeout=15)
@@ -330,6 +338,7 @@ class KickMenuView(discord.ui.View):
                 child.disabled = True
         if self.message:
             await self.message.edit(view=self)
+
 
 
 class voice_buttons(commands.Cog):

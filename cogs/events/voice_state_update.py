@@ -9,6 +9,7 @@ with open("config.json", 'r', encoding='utf-8') as file:
     config = json.load(file)
 
 
+
 class voice_system(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
@@ -56,12 +57,10 @@ class voice_system(commands.Cog):
                         else:
                             random_member = random.choice(before.channel.members)
                             self.client.temp_channels[str(channel_id)]["channel_owner"] = random_member.id
-
-
             except:
                 return
             
+
+
 async def setup(client:commands.Bot) -> None:
     await client.add_cog(voice_system(client))
-
-

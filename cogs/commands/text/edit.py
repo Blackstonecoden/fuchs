@@ -8,13 +8,17 @@ with open("config.json", 'r', encoding='utf-8') as file:
     config = load(file)
 
 
-class send_command(commands.Cog):
+class edit_command(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @commands.command(name="send")
+    @commands.command(name="edit")
     @commands.has_guild_permissions(administrator=True)
-    async def send(self, ctx: commands.Context, *, text: str):
+    async def edit(self, ctx: commands.Context, *, text: str):
+        reference = await ctx.fetch_message(ctx.message.reference.message_id)
+        if reference.author.id != self.client.user.id:
+            return await ctx.reply("❌ Diese Nachricht wurde nicht vom Fuchs-Bot gesendet.", mention_author=False)
+        
         files = []
         for attachment in ctx.message.attachments:
             data = await attachment.read()
@@ -22,14 +26,14 @@ class send_command(commands.Cog):
             files.append(discord.File(fp, filename=attachment.filename))
 
         await ctx.message.delete()
-        await ctx.message.channel.send(text, files=files)
+        await reference.edit(content=text, attachments=files)
 
-    @send.error
+    @edit.error
     async def mute_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingPermissions):
             msg = "❌ Du hast nicht die ausreichenden Berechtigungen, um diesen Befehl verwenden zu können."
         elif isinstance(error, commands.MissingRequiredArgument):
-            msg = "❌ Fehlendes Argument: `!send <text>`."
+            msg = "❌ Fehlendes Argument: `!edit <text>`."
         elif isinstance(error, commands.BadArgument):
             msg = "❌ Fehlerhafte Argumente."
         else:
@@ -38,4 +42,4 @@ class send_command(commands.Cog):
         await ctx.reply(msg, mention_author=False)
 
 async def setup(client:commands.Bot) -> None:
-    await client.add_cog(send_command(client))
+    await client.add_cog(edit_command(client))
