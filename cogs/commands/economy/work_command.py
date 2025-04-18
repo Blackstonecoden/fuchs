@@ -9,6 +9,7 @@ from database.models import EconomyUser
 with open("config.json", 'r', encoding='utf-8') as file:
     config = load(file)
 
+
 class work_command(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client

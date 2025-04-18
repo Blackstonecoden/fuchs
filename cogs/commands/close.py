@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord import app_commands
 from json import load
 
-from cogs.buttons.ticket_buttons import CloseConfirmButtons
+from cogs.ui.ticket_ui import CloseConfirmButtons
 
 with open("config.json", 'r', encoding='utf-8') as file:
     config = load(file)

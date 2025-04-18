@@ -9,6 +9,7 @@ from database.models import LevelUser
 with open("config.json", 'r', encoding='utf-8') as file:
     config = json.load(file)
 
+
 async def generate_card(client: commands.Bot, top_users: list) -> discord.File:
     background = Editor("images/leaderboard_background.png")
 
@@ -29,11 +30,11 @@ async def generate_card(client: commands.Bot, top_users: list) -> discord.File:
     return discord.File(fp=background.image_bytes, filename="leaderboard.png")
     
 
-class level_leaderboard_command(commands.Cog):
+class leaderboard_command(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @app_commands.command(name="level-leaderboard", description="Zeigt die Top 10 Nutzer an")
+    @app_commands.command(name="leaderboard", description="Zeigt die Top 10 Nutzer an")
     @app_commands.guild_only()
     @app_commands.guilds(int(config["guild_id"]))
     async def level_leaderboard(self, interaction: discord.Interaction):
@@ -47,4 +48,4 @@ class level_leaderboard_command(commands.Cog):
         await interaction.edit_original_response(embed=embed, attachments=[file])
 
 async def setup(client:commands.Bot) -> None:
-    await client.add_cog(level_leaderboard_command(client))
+    await client.add_cog(leaderboard_command(client))

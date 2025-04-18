@@ -8,6 +8,7 @@ from database.models import EconomyUser
 with open("config.json", 'r', encoding='utf-8') as file:
     config = json.load(file)
 
+
 class balance_command(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client

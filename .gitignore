@@ -1,9 +1,7 @@
-/0old
+__pycache__
+.env
+config.json
+
 /.venv
 /json
 /testing
-/files
-.env
-config.json
-__pycache__
-ignored.*

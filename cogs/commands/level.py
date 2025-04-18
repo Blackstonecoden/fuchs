@@ -9,6 +9,7 @@ from database.models import LevelUser
 with open("config.json", 'r', encoding='utf-8') as file:
     config = load(file)
 
+
 async def generate_card(user: discord.User, xp, xp_next, xp_last, level, position):
     if level == 0:
         percentage = int((xp/xp_next)*100)
@@ -47,7 +48,8 @@ async def generate_card(user: discord.User, xp, xp_next, xp_last, level, positio
 
     return discord.File(fp=background.image_bytes, filename="levelcard.png")
 
-class get_level_command(commands.Cog):
+
+class level_command(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -71,4 +73,4 @@ class get_level_command(commands.Cog):
         await interaction.edit_original_response(attachments=[file])
 
 async def setup(client:commands.Bot) -> None:
-    await client.add_cog(get_level_command(client))
+    await client.add_cog(level_command(client))

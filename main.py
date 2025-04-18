@@ -13,8 +13,8 @@ import time
 from colorama import Fore, Back, Style
 import platform
 
-from cogs.buttons.ticket_buttons import TicketMenuView, TicketButtons, DeleteTicketButtons
-from cogs.buttons.voice_buttons import VoiceButtons
+from cogs.ui.ticket_ui import TicketMenuView, TicketButtons, DeleteTicketButtons
+from cogs.ui.voice_ui import VoiceButtons
 
 from aiomysql import Pool
 from aiomysql import Warning as MySQLWarning 

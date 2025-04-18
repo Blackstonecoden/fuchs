@@ -8,6 +8,7 @@ from database.models import EconomyUser
 with open("config.json", 'r', encoding='utf-8') as file:
     config = load(file)
 
+
 def convert(number: int) -> str:
     if number >= 10**9: 
         exponent = int(math.log10(number))
@@ -22,11 +23,12 @@ def convert(number: int) -> str:
     else:
         return str(number)
 
-class balance_top_command(commands.Cog):
+
+class baltop_command(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @app_commands.command(name="balance-top", description="Zeigt die 10 reichsten Mitglieder an")
+    @app_commands.command(name="baltop", description="Zeigt die 10 reichsten Mitglieder an")
     @app_commands.guild_only()
     @app_commands.guilds(int(config["guild_id"]))
     async def balance_top(self, interaction: discord.Interaction):
@@ -50,4 +52,4 @@ class balance_top_command(commands.Cog):
         await interaction.edit_original_response(embed=embed)
 
 async def setup(client:commands.Bot) -> None:
-    await client.add_cog(balance_top_command(client))
+    await client.add_cog(baltop_command(client))
