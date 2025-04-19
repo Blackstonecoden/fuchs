@@ -88,7 +88,7 @@ class TicketButtons(discord.ui.View):
         super().__init__(timeout=None)
         self.client = client
 
-    @discord.ui.button(emoji=config["emojis"]["user_plus"], custom_id="remove_user_ticket", row=0)
+    @discord.ui.button(emoji=config["emojis"]["user_plus"], custom_id="add_user_ticket", row=0)
     async def add_user_callback(self, interaction: discord.Interaction, Button: discord.ui.Button):
         if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]) or any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_type"]]["roles"] for role in interaction.user.roles) == True:
             embed = discord.Embed(description=f"## Nutzer hinzufügen\n\nWähle unten den Nutzer aus, den du zu diesem Ticket hinzufügen möchtest, damit er dir helfen kann.", color=0xa7acb4)
@@ -99,7 +99,7 @@ class TicketButtons(discord.ui.View):
         else:
             await interaction.response.send_message("❌ Du bist nicht der Ticket-Eigentümer.", ephemeral=True)
 
-    @discord.ui.button(emoji=config["emojis"]["user_minus"], custom_id="add_user_ticket", row=0)
+    @discord.ui.button(emoji=config["emojis"]["user_minus"], custom_id="remove_user_ticket", row=0)
     async def remove_user_callback(self, interaction: discord.Interaction, Button: discord.ui.Button):
         if interaction.user.id == int(self.client.ticket_list[str(interaction.channel.id)]["ticket_owner"]) or any(role.id in config["ticket_types"][self.client.ticket_list[str(interaction.channel.id)]["ticket_type"]]["roles"] for role in interaction.user.roles) == True:
 

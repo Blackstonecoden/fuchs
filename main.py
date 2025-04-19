@@ -39,7 +39,6 @@ if not os.path.exists("json/tickets.json"):
         json.dump({}, file, ensure_ascii=False, indent=4)
 
 async def on_tree_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
-    print(error)
     if isinstance(error, app_commands.CommandOnCooldown):
         if error.retry_after >= 60:
             if interaction.command.name == "work":
