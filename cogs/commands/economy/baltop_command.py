@@ -28,7 +28,7 @@ class baltop_command(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @app_commands.command(name="baltop", description="Zeigt die 10 reichsten Mitglieder an")
+    @app_commands.command(name="weristdergroßverdiener", description="Zeigt die 10 reichsten Mitglieder an")
     @app_commands.guild_only()
     @app_commands.guilds(int(config["guild_id"]))
     async def balance_top(self, interaction: discord.Interaction):
