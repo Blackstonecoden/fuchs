@@ -27,7 +27,7 @@ class send_command(commands.Cog):
     @send.error
     async def mute_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingPermissions):
-            msg = "❌ Du hast nicht die ausreichenden Berechtigungen, um diesen Befehl verwenden zu können."
+            return
         elif isinstance(error, commands.MissingRequiredArgument):
             msg = "❌ Fehlendes Argument: `!send <text>`."
         elif isinstance(error, commands.BadArgument):
